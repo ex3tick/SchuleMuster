@@ -1,0 +1,44 @@
+﻿@using WebApp.Model
+@model WebApp.Model.LoginTransferObjekt
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+<div>
+    <form asp-action="Login" method="post">
+        <div>
+            <label asp-for="person.Username">Username</label>
+            <input type="text" asp-for="person.Username" placeholder="Username">
+            <span asp-validation-for="person.Username" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="person.Password">Password</label>
+            <input type="password" asp-for="person.Password" placeholder="Password">
+            <span asp-validation-for="person.Password" class="text-danger"></span>
+        </div>
+        <div>
+            <label for="wPw">Repeat Password</label>
+            <input type="password" id="wPw" name="wPw" placeholder="Repeat Password">
+            <!-- You might want to add JavaScript to validate password matching or handle it server-side -->
+        </div>
+        <div>
+            <input type="submit" value="Send">
+        </div>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>

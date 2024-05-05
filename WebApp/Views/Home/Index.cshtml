@@ -1,12 +1,52 @@
-﻿
-<!DOCTYPE html>
+﻿@using WebApp.Model
+@model WebApp.Model.LoginTransferObjekt
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
+<!DOCTYPE html>
 <html>
+
+
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
-    <h1 style="color:aquamarine">Erste tolle MVC-Webanwendung...Heureka!!! 👌</h1>
+<header>
+    <nav>
+        <a href="/home/zweite">
+            <img src="/Images/ex3.jpeg" alt="Home">
+        </a>
+        <div>
+            @if (Model.person != null)
+            {
+            <span>Welcome, @Model.person.Username</span>
+            <form method="post" asp-action="Logout">
+                <input type="submit" value="Logout">
+            </form>
+            }
+            else
+            {
+            <span>Welcome, Guest</span>
+            <a href="/home/login"><button >Login</button></a>
+            <a href="/home/register"><button>Register</button></a>
+            }
+        </div>
+    </nav>
+</header>
+
+<main>
+    <h1 style="color:aquamarine">Erste tolle Seasson...Heureka!!! 👌</h1>
+
+
+
+    <section>
+        <h2>Navigation</h2>
+        <a href="/home/Everyone">Everyone</a>
+        <a href="/home/Privacy">Privacy</a>
+    </section>
+</main>
+
+
 </body>
 </html>

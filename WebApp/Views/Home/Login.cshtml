@@ -1,0 +1,26 @@
+﻿@model WebApp.Model.LoginTransferObjekt
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<p>Login</p> <br>
+
+<form method="post" asp-action="Login">
+    <input type="text" asp-for="person.Username" placeholder="Username">
+    <input type="password" asp-for="person.Password" placeholder="Password">
+    <input type="submit" value="Login">
+</form>
+<div>
+
+</div>
+</body>
+</html>
