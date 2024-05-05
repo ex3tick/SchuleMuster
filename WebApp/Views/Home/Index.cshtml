@@ -3,50 +3,87 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 <!DOCTYPE html>
-<html>
-
-
+<html lang="de">
 <head>
     <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+      
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: cornflowerblue;
+            padding: 20px;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-direction: row;
+            margin: 10px;
+        }
+
+        .nav-section {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <header>
-    <nav>
-        <a href="/home/zweite">
-            <img src="/Images/ex3.jpeg" alt="Home">
-        </a>
-        <div>
-            @if (Model.person != null)
-            {
-            <span>Welcome, @Model.person.Username</span>
-            <form method="post" asp-action="Logout">
-                <input type="submit" value="Logout">
-            </form>
-            }
-            else
-            {
-            <span>Welcome, Guest</span>
-            <a href="/home/login"><button >Login</button></a>
-            <a href="/home/register"><button>Register</button></a>
-            }
-        </div>
-    </nav>
+    <a href="/home/index">
+        <img src="/Images/ex3.jpeg" alt="Home">
+    </a>
 </header>
 
 <main>
-    <h1 style="color:aquamarine">Erste tolle Seasson...Heureka!!! 👌</h1>
-
-
-
-    <section>
+    @if (Model.person != null)
+    {
+    @if (Model.person.IsAdmin)
+    {
+    <p>Ist admin</p>
+    }
+    <span>Welcome, @Model.person.Username</span>
+    <form method="post" asp-action="Logout">
+        <input type="submit" value="Logout">
+    </form>
+    }
+    else
+    {
+    <div class="flex-row">
+        <a href="/home/login">
+            <button>Login</button>
+        </a>
+        <a href="/home/register">
+            <button>Register</button>
+        </a>
+    </div>
+    }
+    <section class="nav-section">
         <h2>Navigation</h2>
-        <a href="/home/Everyone">Everyone</a>
-        <a href="/home/Privacy">Privacy</a>
+        <a href="/home/Everyone"><button>Everyone</button></a>
+        <a href="/home/Privacy"><button>Privacy</button></a>
     </section>
 </main>
-
-
+<footer>
+    <p>Copyright © 2023</p>
+</footer>
 </body>
 </html>

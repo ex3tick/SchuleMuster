@@ -1,13 +1,12 @@
-﻿@using WebApp.Model
-@model WebApp.Model.LoginTransferObjekt
+﻿@model WebApp.Model.LoginTransferObjekt
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +14,12 @@ Layout = null;
 </head>
 <body>
 <div>
-    <form asp-action="Login" method="post">
+    <a href="/home/index">
+        <img src="/Images/ex3.jpeg" alt="Home"/>
+    </a>
+</div>
+<div>
+    <form asp-action="Register" method="post">
         <div>
             <label asp-for="person.Username">Username</label>
             <input type="text" asp-for="person.Username" placeholder="Username">
@@ -27,8 +31,9 @@ Layout = null;
             <span asp-validation-for="person.Password" class="text-danger"></span>
         </div>
         <div>
-            <label for="wPw">Repeat Password</label>
-            <input type="password" id="wPw" name="wPw" placeholder="Repeat Password">
+            <label asp-for="person.PasswordConfirm">Confirm Password</label>
+            <input type="password" asp-for="person.PasswordConfirm" placeholder="Confirm Password">
+            <span asp-validation-for="person.PasswordConfirm" class="text-danger"></span>
             <!-- You might want to add JavaScript to validate password matching or handle it server-side -->
         </div>
         <div>

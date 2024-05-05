@@ -12,12 +12,24 @@
     <title>title</title>
 </head>
 <body>
-<p>Login</p> <br>
+<div>
+    <a href="/home/index">
+        <img src="/Images/ex3.jpeg" alt="Home"/>
+    </a>
+</div>
 
 <form method="post" asp-action="Login">
-    <input type="text" asp-for="person.Username" placeholder="Username">
-    <input type="password" asp-for="person.Password" placeholder="Password">
-    <input type="submit" value="Login">
+
+    <div>
+        <label asp-for="person.Username">Username</label>
+        <input type="text" asp-for="person.Username" placeholder="Username">
+        <span asp-validation-for="person.Username" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="person.Password">Password</label>
+        <input type="password" asp-for="person.Password" placeholder="Password">
+        <span asp-validation-for="person.Password" class="text-danger"></span>
+    </div>
 </form>
 <div>
 

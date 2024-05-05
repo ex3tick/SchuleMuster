@@ -5,27 +5,41 @@ using WebApp.SqlDal;
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
+    
     {
-        private UserDAL _userDal = new UserDAL();
+       
+        private readonly Services _services;
+
+        public HomeController(IConfiguration configuration)
+        {
+            _services = new Services(configuration);
+        }
+       
+      /// <summary>
+      /// 
+      /// </summary>
+      /// <returns></returns>
         public IActionResult Index()
         {
            
             
             LoginTransferObjekt login = new LoginTransferObjekt();
-            login.Users = _userDal.GetAllUsers();
-            if(HttpContext.Session.GetString("username") != null)
+            bool isAdmin = HttpContext.Session.GetString("isAdmin") == "True";
+            string username = HttpContext.Session.GetString("username");
+            if(username != null)
             {
-                login = new LoginTransferObjekt();
-                login.person = new Person();
-                login.person.Username = HttpContext.Session.GetString("username");
-                login.loggedIn = true;
+                login = _services.Islogedin(username,isAdmin);
+               
                 return View(login);
             }
             
             return View(login);
         }
         
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Everyone()
         {
             return View();
@@ -40,6 +54,10 @@ namespace WebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login()
         {
@@ -50,9 +68,10 @@ namespace WebApp.Controllers
         public IActionResult Login(LoginTransferObjekt login)
         {
            
-            if (_userDal.CheckLogin(login))
+            if (_services.Login(login))
             {
                 HttpContext.Session.SetString("username", login.person.Username);
+                HttpContext.Session.SetString("isAdmin", login.person.IsAdmin.ToString());
                 return RedirectToAction("Index");
             }
             return RedirectToAction("Login");
@@ -63,26 +82,28 @@ namespace WebApp.Controllers
             return RedirectToAction("Index");
         }
         
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
-        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost]
-        public IActionResult Register(LoginTransferObjekt login, string wPw)
+        public IActionResult Register(LoginTransferObjekt login)
         {
-            if (login.person.Password != wPw)
-            {
+              if (_services.Register(login))
+                {
+                 return RedirectToAction("Login");
+                }
                 return RedirectToAction("Register");
-            }
-            if (_userDal.Register(login))
-            {
-                
-                return RedirectToAction("Login");
-            }
-            return RedirectToAction("Register");
         }
       
     }

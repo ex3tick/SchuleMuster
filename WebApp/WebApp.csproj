@@ -17,4 +17,10 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="GenerateHash">
+      <HintPath>..\..\GenerateHash\bin\Debug\net8.0\GenerateHash.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
