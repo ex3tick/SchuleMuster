@@ -1,72 +1,71 @@
 ﻿using WebApp.SqlDal;
 
-namespace WebApp.Model;
-
-public class Services
+namespace WebApp.Model
 {
-    private readonly IAccessable _userDal;
+    /// <summary>
+    /// Provides services related to user authentication and registration.
+    /// </summary>
+    public class Services
+    {
+        private readonly IAccessable _userDal;
 
-   public  Services(IConfiguration configuration)
-    {
-        string _connectionString = configuration.GetConnectionString("DefaultConnection");
-        _userDal = new UserDAL(_connectionString);
-        
-    }
-   
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <param name="usernamme"></param>
-   /// <param name="isAdmin"></param>
-   /// <returns></returns>
-   
-    public LoginTransferObjekt Islogedin(string usernamme,bool isAdmin)
-    {
-        LoginTransferObjekt login;
-        try
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Services"/> class.
+        /// </summary>
+        /// <param name="configuration">The configuration object to get the connection string.</param>
+        public Services(IConfiguration configuration)
         {
-             login = new LoginTransferObjekt();
-            login.person = new Person();
-            login.person.Username = usernamme;
-            login.person.IsAdmin = isAdmin == true;
-            
+            string _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _userDal = new UserDAL(_connectionString);
         }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message);
-            throw;
-        }
-        
-        
-        return login;
-    }
 
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <param name="login"></param>
-   /// <returns></returns>
-    public bool Login(LoginTransferObjekt login)
-    {
+        /// <summary>
+        /// Checks if the user is logged in and returns the corresponding <see cref="LoginTransferObjekt"/>.
+        /// </summary>
+        /// <param name="username">The username of the user.</param>
+        /// <param name="isAdmin">A boolean indicating whether the user is an admin.</param>
+        /// <returns>A <see cref="LoginTransferObjekt"/> containing the user's login information.</returns>
+        public LoginTransferObjekt Islogedin(string username, bool isAdmin)
+        {
+            LoginTransferObjekt login;
+            try
+            {
+                login = new LoginTransferObjekt
+                {
+                    person = new Person
+                    {
+                        Username = username,
+                        IsAdmin = isAdmin
+                    }
+                };
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
 
-        if (_userDal.Login(login))
-        {
-            return true;
+            return login;
         }
-        else return false;
-    }
-   /// <summary>
-   /// 
-   /// </summary>
-   /// <param name="login"></param>
-   /// <returns></returns>
-    public bool Register(LoginTransferObjekt login)
-    {
-        if (_userDal.Register(login))
+
+        /// <summary>
+        /// Logs in the user.
+        /// </summary>
+        /// <param name="login">The login transfer object containing the user's credentials.</param>
+        /// <returns>True if the login is successful, otherwise false.</returns>
+        public bool Login(LoginTransferObjekt login)
         {
-            return true;
+            return _userDal.Login(login);
         }
-        else return false;
+
+        /// <summary>
+        /// Registers a new user.
+        /// </summary>
+        /// <param name="login">The login transfer object containing the user's registration details.</param>
+        /// <returns>True if the registration is successful, otherwise false.</returns>
+        public bool Register(LoginTransferObjekt login)
+        {
+            return _userDal.Register(login);
+        }
     }
-  
 }
